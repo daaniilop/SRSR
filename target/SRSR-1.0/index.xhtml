@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+    <h:head>
+        <title>SRSR</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <h:outputStylesheet library="css" name="app-srsr.css"/> <!--CHAMANDO O CSS GERAL PARA A PÁGINA -->
+
+    </h:head>
+    <h:body>
+        <div><ui:include src="/menu.xhtml" /></div>
+        <!-- Essa propriedade ui:include é para reaproveitamento de código, no caso ela chama a página menu.xhtml -->
+
+        <div class="hero-logo">
+            <p:graphicImage library="images" name="Logo-Inicio-SRSR.png" alt="SISTEMA DE REGISTRO DE SERVIÇOS REALIZADOS"/>
+        </div>
+    </h:body>
+</html>

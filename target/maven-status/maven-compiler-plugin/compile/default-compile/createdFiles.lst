@@ -1,0 +1,7 @@
+br\com\srsr\entidade\Cliente.class
+br\com\srsr\dao\ServicoDAO.class
+br\com\srsr\beans\ClienteBean.class
+br\com\srsr\util\ConnectionFactory.class
+br\com\srsr\beans\ServicoBean.class
+br\com\srsr\dao\ClienteDAO.class
+br\com\srsr\entidade\Servico.class

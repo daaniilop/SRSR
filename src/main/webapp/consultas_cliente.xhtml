@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Consulta por Cliente</title>
+
+        <h:outputScript library="js" name="main-srsr.js"/>
+        <!--Aqui está chamando o arquivo javascript principal,
+        nele existe uma propriedade que detecta alteração no form,
+        para evitar mudar de tela por engano, ou antes de salvar -
+        mediante confirmação em páginas, após salvar ou cancelar, chamar onclick="resetAlterado()"-->
+
+        <div><ui:include src="/menu.xhtml" /></div>
+        <!-- Essa propriedade ui:include é para reaproveitamento de código, no caso ela chama a página menu.xhtml -->
+
+        <h:outputStylesheet library="css" name="app-srsr.css"/> <!--CHAMANDO O CSS GERAL PARA A PÁGINA -->
+
+    </h:head>
+    <h:body>
+        <div class="titulo">
+            <p:outputLabel  value="CONSULTA SERVIÇOS REALIZADOS POR CLIENTE" />
+        </div>
+        <p:messages id="msgs" showDetail="true" closable="true" />
+        <p:growl id="growl" showDetail="true" life="4000" />
+        <h:form id="form">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="cliente" value="Cliente:"/>
+                <p:selectOneMenu id="cliente" value="#{servicoBean.idClienteSelecionado}" required="true">
+                    <f:selectItems value="#{servicoBean.opcoesClientes}"/>
+                </p:selectOneMenu>
+            </p:panelGrid>
+            <p:commandButton value="Buscar" action="#{servicoBean.buscarPorCliente}" update="form data msgs growl" style="margin-left: 820px"/>
+        </h:form>
+        <p:dataTable value="#{servicoBean.consulta}" var="r" lazy="false" id="data">
+            <p:column>
+                <f:facet name="header">Cliente</f:facet>
+                    #{r.clienteNome}
+            </p:column>
+            <p:column>
+                <f:facet name="header">Descrição</f:facet>
+                    #{r.descricao}
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Data" />
+                </f:facet>
+
+                <h:outputText value="#{r.data}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Valor</f:facet>
+                    #{r.valorCobrado}
+            </p:column>
+            <p:column>
+                <f:facet name="header">Observações</f:facet>
+                    #{r.observacoes}
+            </p:column>
+        </p:dataTable>
+
+    </h:body>
+</html>

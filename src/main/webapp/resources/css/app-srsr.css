@@ -1,0 +1,75 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/*
+    Created on : 1 de out. de 2025, 23:53:11
+    Author     : Daaniilop
+*/
+.hero-logo {
+    min-height: 40vh; /* Imagem usando vw -> depende da largura da tela - OU SEJA É UMA FORMA DE APLICAR UM LAYOUT RESPONSIVO DE MANEIRA SIMPLES */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    text-align: center;
+}
+.hero-logo img {
+
+    /* Esilo aplicado em qualquer <img> que esteja dentro de um container com a classe .hero-logo,
+    De toda forma o primefaces gera um <img> no html para qualquer imagem
+        SE EU TIVE NOMEADO COMO .img NO CSS, A PROPRIEDADE SERIA SETADA EM QUALQUER IMAGEM QUE UTILIZASSE class="img"
+    */
+
+    width: 100%;  /* Imagem usando % -> depende da largura da div.box */
+    max-width: min(420px, 90vw); /* Imagem usando vw -> depende da largura da tela - OU SEJA É UMA FORMA DE APLICAR UM LAYOUT RESPONSIVO DE MANEIRA SIMPLES */
+    height: auto;
+    object-fit: contain;
+}
+.title {
+    margin-top: 8px;
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+
+.col-input {
+    width: 250px; /* inputs ocupam o resto do espaço */
+}
+
+.col-label {
+
+    width: 200px;   /* largura da coluna dos labels */
+    text-align: left; /* Alinhamento à esquerda */
+    font-weight: bold; /* Rótulo em negrito */
+}
+
+.titulo {                /*usar essa CLASS para o título das páginas de cadastro ou alterações,
+                         sendo páginas completas ou PDialog*/
+    width: 450px;        /*largura de 400px, que no caso é a soma entre col-input col-label*/
+    line-height: 60px;   /*altura da linha*/
+    text-align: center;
+
+    letter-spacing: 2px;
+    word-spacing: 10px;
+
+    font-weight: bold;
+    font-size-adjust: 0.6;
+
+
+}
+
+.titulo-pag-inteira {                /*usar essa CLASS para o título das páginas de cadastro ou alterações,
+                         sendo páginas completas ou PDialog*/
+    width: 100%;
+    max-width: min(100%, 100vw);
+    line-height: 60px;   /*altura da linha*/
+    text-align: center;
+
+    letter-spacing: 2px;
+    word-spacing: 10px;
+
+    font-weight: bold;
+    font-size-adjust: 0.6;
+
+
+}

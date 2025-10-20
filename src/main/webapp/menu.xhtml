@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/XHtml.xhtml to edit this template
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>SRSR</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+        <h:outputStylesheet> /*aqui eu usei CSS local para teste do menu*/
+            .page { padding: 2rem; }
+            .hero { margin: .5rem 0 1.25rem; position: center; }
+            .brand { font-weight: 600; letter-spacing: .3px; }
+        </h:outputStylesheet>
+
+        <h:outputScript library="js" name="main-srsr.js"/>
+        <!--Aqui está chamando o arquivo javascript principal,
+        nele existe uma propriedade que detecta alteração no form,
+        para evitar mudar de tela por engano, ou antes de salvar - mediante confirmação
+        em páginas normais, após salvar ou cancelar, chamar onclick="resetAlterado()"-->
+
+
+    </h:head>
+    <h:body>
+        <h:form id="frm">
+            <p:menubar style="border-radius:12px; margin: .75rem;">
+                <p:menuitem value="Início" icon="pi pi-home" outcome="index"/>
+
+                <p:submenu label="Cadastros" icon="pi pi-database">
+                    <p:menuitem value="Clientes" icon="pi pi-users" outcome="clientes"/>
+                </p:submenu>
+
+                <p:menuitem value="Registrar Serviço" icon="pi pi-check" outcome="servico_form"/>
+
+                <p:submenu label="Consultar Serviços" icon="pi pi-search">
+                    <p:menuitem value="Por Cliente" icon="pi pi-user" outcome="consultas_cliente"/>
+                    <p:menuitem value="Por Datas" icon="pi pi-calendar" outcome="consultas_datas"/>
+                </p:submenu>
+
+                <p:submenu label="Alterar / Excluir" icon="pi pi-wrench">
+                    <p:menuitem value="Clientes" icon="pi pi-user" outcome="change_del_cli"/>
+                    <p:menuitem value="Serviços" icon="pi pi-calendar" outcome="change_del_ser"/>
+                </p:submenu>
+
+                <f:facet name="options">
+                    <span class="brand">SRSR</span>
+                </f:facet>
+            </p:menubar>
+        </h:form>
+    </h:body>
+</html>

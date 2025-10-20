@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+
+    <h:head>
+        <title>Cadastro de Clientes</title>
+
+        <h:outputScript library="js" name="main-srsr.js"/>
+        <!--Aqui está chamando o arquivo javascript principal,
+        nele existe uma propriedade que detecta alteração no form,
+        para evitar mudar de tela por engano, ou antes de salvar -
+        mediante confirmação em páginas, após salvar ou cancelar, chamar onclick="resetAlterado()"-->
+
+        <div><ui:include src="/menu.xhtml" /></div>
+        <!-- Essa propriedade ui:include é para reaproveitamento de código, no caso ela chama a página menu.xhtml -->
+
+        <h:outputStylesheet library="css" name="app-srsr.css"/> <!--CHAMANDO O CSS GERAL PARA A PÁGINA -->
+
+    </h:head>
+
+    <h:body>
+        <div class="titulo">
+            <p:outputLabel  value="CADASTRO DE CLIENTES" />
+        </div>
+        <p:messages id="msgs" showDetail="true" closable="true" />
+
+        <h:form id="cliente">
+
+            <!-- <p:growl id="growl" showDetail="true" life="4000" /> -->
+
+            <p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid" columnClasses="col-label,col-input">
+
+                <p:outputLabel for="nome" value="Nome:"/>
+                <p:inputText id="nome" value="#{clienteBean.cliente.nomeRazao}" required="true" />
+
+                <p:outputLabel for="doc" value="CPF/CNPJ:" />
+                <p:inputText id="doc" value="#{clienteBean.cliente.cpfCnpj}" required="true"/>
+
+                <p:outputLabel for="fone" value="Telefone:" />
+                <p:inputText id="fone" value="#{clienteBean.cliente.telefone}"/>
+
+                <p:outputLabel for="email" value="E-mail:" />
+                <p:inputText id="email" value="#{clienteBean.cliente.email}" />
+
+                <p:outputLabel for="obs" value="Observações:" />
+                <p:inputTextarea id="obs" value="#{clienteBean.cliente.observacoes}" autoResize="true"/>
+
+                <p:commandButton value="Salvar" action="#{clienteBean.salvar}" styleClass="ui-button-success"
+                                 icon="pi pi-check" update="cliente msgs" process="cliente" style="width:120px;
+                                 margin-right:98px" onclick="resetAlterado()"/>
+
+                <p:commandButton value="Cancelar" immediate="true" onclick="resetAlterado()" style="width:120px;
+                                 margin-left:98px" styleClass="ui-button-secondary" icon="pi pi-times" type="reset"/>
+            </p:panelGrid>
+        </h:form>
+    </h:body>
+</html>

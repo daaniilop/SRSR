@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="jakarta.faces.core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="jakarta.faces.facelets">
+    <h:head>
+        <title>Consulta por Datas</title>
+
+        <h:outputScript library="js" name="main-srsr.js"/>
+        <!--Aqui está chamando o arquivo javascript principal,
+        nele existe uma propriedade que detecta alteração no form,
+        para evitar mudar de tela por engano, ou antes de salvar -
+        mediante confirmação em páginas, após salvar ou cancelar, chamar onclick="resetAlterado()"-->
+
+        <div><ui:include src="/menu.xhtml" /></div>
+        <!-- Essa propriedade ui:include é para reaproveitamento de código, no caso ela chama a página menu.xhtml -->
+
+        <h:outputStylesheet library="css" name="app-srsr.css"/> <!--CHAMANDO O CSS GERAL PARA A PÁGINA -->
+
+    </h:head>
+    <h:body>
+        <div class="titulo">
+            <p:outputLabel  value="CONSULTA SERVIÇOS REALIZADOS POR INTERVALO DE DATAS" />
+        </div>
+        <p:messages id="msgs" showDetail="true" closable="true" />
+        <p:growl id="growl" showDetail="true" life="4000" />
+        <h:form id="cons-data">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="ini" value="Data inicial:"/>
+                <p:calendar id="ini" value="#{servicoBean.servico.dataIni}" pattern="dd/MM/yyyy" mask="true"
+                            style="width:50px" required="true"/>
+                <p:outputLabel for="fim" value="Data final:"/>
+                <p:calendar id="fim" value="#{servicoBean.servico.dataFim}" pattern="dd/MM/yyyy" mask="true"
+                            style="width:50px" required="true"/>
+            </p:panelGrid>
+            <p:commandButton value="Buscar" action="#{servicoBean.buscarPorDatas}" update="msgs cons-data result growl" style="margin-left: 820px"/>
+        </h:form>
+        <p:dataTable id="result" value="#{servicoBean.consulta}" var="r" lazy="false">
+            <p:column>
+                <f:facet name="header">Cliente</f:facet>
+                    #{r.clienteNome}
+            </p:column>
+            <p:column>
+                <f:facet name="header">Descrição</f:facet>
+                    #{r.descricao}
+            </p:column>
+            <p:column>
+                <f:facet name="header">
+                    <h:outputText value="Data" />
+                </f:facet>
+
+                <h:outputText value="#{r.data}">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:outputText>
+            </p:column>
+            <p:column>
+                <f:facet name="header">Valor</f:facet>
+                    #{r.valorCobrado}
+            </p:column>
+            <p:column>
+                <f:facet name="header">Observações</f:facet>
+                    #{r.observacoes}
+            </p:column>
+        </p:dataTable>
+
+    </h:body>
+</html>

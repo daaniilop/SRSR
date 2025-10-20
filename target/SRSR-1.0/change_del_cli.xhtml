@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="jakarta.faces.facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <title>Alterar / Excluir - Clientes</title>
+
+        <h:outputScript library="js" name="main-srsr.js"/>
+        <!--Aqui está chamando o arquivo javascript principal,
+        nele existe uma propriedade que detecta alteração no form,
+        para evitar mudar de tela por engano, ou antes de salvar -
+        mediante confirmação em páginas, após salvar ou cancelar, chamar onclick="resetAlterado()"-->
+
+        <div><ui:include src="/menu.xhtml" /></div>
+        <!-- Essa propriedade ui:include é para reaproveitamento de código, no caso ela chama a página menu.xhtml -->
+
+        <h:outputStylesheet library="css" name="app-srsr.css"/> <!--CHAMANDO O CSS GERAL PARA A PÁGINA -->
+
+    </h:head>
+    <h:body>
+
+        <div class="titulo-pag-inteira">
+            <p:outputLabel  value="ALTERAR \ EXCLUIR -- CLIENTES --" />
+        </div>
+
+        <p:messages id="msgs" showDetail="true" closable="true" styleClass="auto-hide-msgs">
+            <p:autoUpdate/>
+        </p:messages>
+        <p:growl id="growl" showDetail="true" life="4000" />
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" />
+
+        <!-- Esse bloco aqui de cima, contém os ítens que são mensagens de confiramação ou coisas nesse sentido -->
+
+        <h:form id="form">
+
+            <p:dataTable id="clientes"
+                         var="cli"
+                         value="#{clienteBean.clientes}"
+                         editable="true"
+
+                         style="margin-bottom:20px"
+                         rows="10"
+                         paginator="true"
+                         emptyMessage="Nenhum registro encontrado."
+                         widgetVar="tabela"
+                         globalFilterOnly="false"
+                         >
+
+                <p:column headerText="Nome\Razão" filterBy="#{cli.nomeRazao}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{cli.nomeRazao}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{cli.nomeRazao}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="CPF\CNPJ" filterBy="#{cli.cpfCnpj}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{cli.cpfCnpj}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{cli.cpfCnpj}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Telefone" filterBy="#{cli.telefone}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{cli.telefone}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{cli.telefone}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="E-mail" filterBy="#{cli.email}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{cli.email}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{cli.email}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+
+                <p:column headerText="Observações" filterBy="#{cli.observacoes}">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{cli.observacoes}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{cli.observacoes}" style="width:100%"/>
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <div>
+                    <p:column headerText="Alterar" width="50px">
+                        <p:rowEditor editTitle="Editar Cadastro" cancelTitle="Cancelar Edição" saveTitle="Salvar Edição"/>
+                    </p:column>
+                    <p:ajax event="rowEdit" listener="#{clienteBean.linhaEdita}" update="clientes msgs growl" onsuccess="resetAlterado()" />
+                    <p:ajax event="rowEditCancel" listener="#{clienteBean.linhaCancela}" update="clientes msgs growl"/>
+
+                    <p:column headerText="Excluir" style="width:5rem; text-align:center">
+                        <p:commandButton icon="pi pi-trash" title="Excluir"
+                                         styleClass="ui-button-danger ui-button-flat"
+                                         actionListener="#{clienteBean.preparaExclusao(cli)}"
+                                         update=":form:clientes:confirmDialog"
+                                         oncomplete="PF('confirmacao').show()">
+                            <!-- //Método usado no botão de excluir, commandButton, passando o atributo "var" do DataTable,
+                                        depois no ConfirmaDialog eu apenas confirmo a
+                                        exclusão com o metodo excluir, sem parametro,
+                                        pois o View do Beans já está com a variavel da entidade carregada na memória;
+                            -->
+
+                            <p:confirmDialog id="confirmDialog" widgetVar="confirmacao"
+                                             header="Confirmação" message="Deseja realmente excluir o cliente?"
+                                             severity="warn" appendTo="@(body)">
+
+                                <p:commandButton value="Sim" icon="pi pi-check"
+                                                 actionListener="#{clienteBean.excluir()}"
+                                                 update="clientes msgs growl"
+                                                 onclick="PF('confirmacao').hide()"
+                                                 onsuccess="resetAlterado()"
+                                                 />
+
+                                <p:commandButton value="Não" icon="pi pi-times"
+                                                 onclick="PF('confirmacao').hide();" type="button" />
+                            </p:confirmDialog>
+                        </p:commandButton>
+                    </p:column>
+                </div>
+
+                <!--PF() é um helper do PrimeFaces (abreviação de PrimeFaces Widget API).
+                    Qualquer componente com widgetVar definido pode ser manipulado dessa forma:
+                    PF('dialog').show() → abre um <p:dialog>.
+                    PF('growl').clear() → limpa mensagens do <p:growl>.
+                    PF('tabela').filter() → aciona o filtro global-->
+
+            </p:dataTable> <!-- DataTable Edit e Column Filtering Propriedades do PrimeFaces -->
+        </h:form>
+    </h:body>
+</html>
